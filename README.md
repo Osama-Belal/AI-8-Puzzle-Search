@@ -1,6 +1,6 @@
 # 8-Puzzle Solver
 
-This project was originally an assignment for the edX course [ColumbiaX: CSMM.101x Artificial Intelligence (AI)](https://www.edx.org/course/artificial-intelligence-ai) and is a Python implementation of an agent to solve the 8-puzzle game using various search algorithms and heuristics.
+This project was originally an assignment for the edX course [ColumbiaX: CSMM.101x Artificial Intelligence (AI)](https://www.edx.org/course/artificial-intelligence-ai) and we will use JAVA language to implement and solve the 8-puzzle game using various search algorithms and heuristics.
 
 ## Overview
 
