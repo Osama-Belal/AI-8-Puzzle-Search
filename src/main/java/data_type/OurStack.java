@@ -1,7 +1,13 @@
 package data_type;
 
-public class Stack<T> implements Frontier<T> {
-    private Stack<T> stack;
+import java.util.Stack;
+
+public class OurStack<T> implements Frontier<T> {
+    public Stack<T> stack;
+
+    public OurStack(){
+        stack = new Stack<>();
+    }
 
     @Override
     public void push(T state) {
@@ -10,7 +16,7 @@ public class Stack<T> implements Frontier<T> {
 
     @Override
     public T pop() {
-        return null;
+        return stack.pop();
     }
 
     @Override

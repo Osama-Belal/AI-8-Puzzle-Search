@@ -1,17 +1,18 @@
 package search_algorithms;
 
-import data_type.Queue;
-import data_type.Stack;
+import data_type.OurQueue;
+import data_type.OurStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 public class FirstSearch<T> extends Search<T>{
     public FirstSearch(char type){
         switch (type) {
-            case 'B' -> frontier = new Queue<>();
-            case 'D' -> frontier = new Stack<>();
+            case 'B' -> frontier = new OurQueue<>();
+            case 'D' -> frontier = new OurStack<>();
             default -> System.err.println("wrong choice");
         }
 
@@ -24,6 +25,7 @@ public class FirstSearch<T> extends Search<T>{
 
     @Override
     public boolean search(T initialState, T goalState) {
+
         //push the initial state in the frontier and to frontier U explored hashset
         frontier.push(initialState);
         childParent.put(initialState, initialState);
