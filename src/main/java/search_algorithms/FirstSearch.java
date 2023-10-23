@@ -18,6 +18,7 @@ public class FirstSearch<T> extends Search<T>{
         childParent = new HashMap<>();
         neighbors = new Neighbors<>();
         depth = 0 ;
+        reachedGoalState = false;
     }
 
     @Override
@@ -37,7 +38,8 @@ public class FirstSearch<T> extends Search<T>{
             explored.add(currentState);
             if(goalState.equals(currentState))
             {
-                return true;
+                reachedGoalState = true;
+                return reachedGoalState;
             }
 
             //if the current state is not the goal state then get its neighbors and
@@ -72,12 +74,12 @@ public class FirstSearch<T> extends Search<T>{
     @Override
     public ArrayList<T> getPath(T initialState , T goalState ) {
         //get the path from the goal state to the initial state
-        T state = goalState ;
+        T state = (reachedGoalState)? goalState : null ;
         //initialize the path to goal arraylist
         ArrayList<T> pathToGoal = new ArrayList<>();
 
         //iterate till we reach the initial state
-        while (!state.equals(initialState))
+        while (!(state.equals(initialState) || state.equals(null)))
         {
             pathToGoal.add(state);
             state = getParent(state);

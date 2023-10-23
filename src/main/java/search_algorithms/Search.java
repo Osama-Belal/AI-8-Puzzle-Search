@@ -15,6 +15,8 @@ public abstract class Search<T> {
     Neighbors<T> neighbors ;
     Integer depth ;
 
+    boolean reachedGoalState;
+
 
     public abstract boolean search(T initialState, T goalState);
     public abstract T getParent(T state);
