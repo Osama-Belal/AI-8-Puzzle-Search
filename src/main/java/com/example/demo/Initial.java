@@ -17,18 +17,18 @@ public class Initial {
     private long goalState = 12345678L;
     public Initial(MainApp mainApp) {
         VBox layout = new VBox(30);
-        layout.setStyle("-fx-background-color: #FFF3DA; -fx-padding: 20;");
+        layout.setStyle("-fx-background-color: #DAFFFB; -fx-padding: 20; -fx-alignment: center;");
 
         GridPane matrixGrid = createMatrixGrid(142375680L);
 
         Text title = new Text("Enter Your Puzzle");
-        title.setStyle("-fx-font-weight: bold;-fx-text-fill: #FFF;-fx-font-size: 20;-fx-alignment: center;");
         HBox titleContainer = new HBox(title);
+        titleContainer.setStyle("-fx-font-weight: bold; -fx-font-size: 50 ; -fx-alignment: center; -fx-text-fill: #FFF;");
 
         Button DFSbutton = createButton("DFS");
         Button BFSbutton = createButton("BFS");
-        Button AStarManattanbutton = createButton("A* -> Manhattan Distance");
-        Button AStarEuclideanbutton = createButton("A* -> Euclidean Distance");
+        Button AStarManattanbutton = createButton("A* : Manhattan");
+        Button AStarEuclideanbutton = createButton("A* : Euclidean");
         HBox traverseButtons = createButtonContainer(new Button[]{DFSbutton, BFSbutton,
                 AStarManattanbutton, AStarEuclideanbutton});
 
@@ -59,21 +59,24 @@ public class Initial {
         });
 
         layout.getChildren().addAll(titleContainer, matrixGrid, traverseButtons);
-        scene = new Scene(layout, 550, 400);
+        scene = new Scene(layout, 700, 550);
     }
 
     public Scene getScene() { return scene; }
 
     private Button createButton(String text){
         Button button = new Button(text);
-        button.setStyle("-fx-background-color: rgb(61,48,162);-fx-text-fill: #FFF;" +
-                "-fx-alignment: center;-fx-font-size: 13;-fx-margin: 0 10px;");
+        button.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
+                "-fx-alignment: center;-fx-font-size: 15;");
+        button.setMinSize(150, 50);
+        button.setMaxSize(150, 50);
         return button;
     }
 
     private HBox createButtonContainer(Button[] buttons) {
         // Create button container (HBox) and center the buttons
         HBox buttonContainer = new HBox(buttons);
+        buttonContainer.setSpacing(5);
         buttonContainer.setAlignment(Pos.CENTER);
         return buttonContainer;
     }
@@ -96,9 +99,10 @@ public class Initial {
         for (int row = 2; row >= 0; row--) {
             for (int col = 2; col >= 0; col--) {
                 TextField textField = new TextField();
-                textField.setStyle("-fx-background-color: #D0BFFF;-fx-border-width: 0;" +
-                        "-fx-border-radius: 0; -fx-alignment: CENTER;-fx-max-height: 30;");
-
+                textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
+                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:30");
+                textField.setMinSize(100,100);
+                textField.setMaxSize(200, 200);
                 // get the right most digit
                 int val = (int) state % 10;
                 state /= 10;
