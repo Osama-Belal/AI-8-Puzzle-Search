@@ -109,7 +109,8 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     public ArrayList<T> getPath(T initialState, T goalState) {
         ArrayList<T> path = new ArrayList<>();
         T state = (reachedGoalState) ? goalState : null;
-        while (!(state.equals(initialState) || state == null))
+
+        while (!(state == null || state.equals(initialState)))
         {
             path.add(state);
             state = childParent.get(state).getRight();
