@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DFSTest {
 
     FirstSearch dfs = new FirstSearch<>('D');
-    long goalState = 123456780L;
+    long goalState = 12345678L;
     Integer minDepth = 0;
     Integer maxDepth = 0;
     Integer minPathCost = 0;

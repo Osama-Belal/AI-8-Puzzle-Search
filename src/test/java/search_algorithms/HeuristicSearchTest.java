@@ -8,7 +8,7 @@ class HeuristicSearchTest {
 
     HeuristicSearch<Long> heuristicSearchM = new HeuristicSearch<>('M');
     HeuristicSearch<Long> heuristicSearchE = new HeuristicSearch<>('E');
-    long goalState = 123456780L;
+    long goalState = 12345678L;
 
     Integer minDepth = 0;
     Integer maxDepth = 0;
@@ -29,20 +29,6 @@ class HeuristicSearchTest {
         int dist = heuristicSearchM.manhattanDistance(840175236L);
         assertEquals(2+2+4+2+1+0+2+1+4, dist);
     }
-
-//    @Test
-    // TODO : fix this test
-//    void euclideanDistanceOne() {
-//        double dist = heuristicSearchM.manhattanDistance(243657801L);
-//        assertEquals(2.24+2.24+2+1+1+0+2.24+1.41+2, dist);
-//    }
-
-//    @Test
-    // TODO : fix this test
-//    void euclideanDistanceTwo() {
-//        int dist = heuristicSearchM.manhattanDistance(243657801L);
-//        assertEquals(3+3+2+3+1+1+1+2+2, dist);
-//    }
 
     @Test
     void searchAndFindGoalWithEuclidean() {
@@ -70,6 +56,7 @@ class HeuristicSearchTest {
         boolean searchResult = heuristicSearchM.search(142658730L, goalState);
         assertTrue(searchResult);
         System.out.println(heuristicSearchM.getNodesExpanded());
+        System.out.println(heuristicSearchM.getPath(142658730L, goalState));
     }
 
     @Test

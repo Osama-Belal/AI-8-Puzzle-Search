@@ -58,7 +58,6 @@ class Neighbors<T> {
             }
         }
 
-        System.out.println("Neighbors of (" + state + ") are ------>  " + neighborsList);
         return neighborsList;
     }
 }

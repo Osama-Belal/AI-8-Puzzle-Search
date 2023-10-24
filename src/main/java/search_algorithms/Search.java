@@ -15,7 +15,7 @@ public abstract class Search<T> {
     HashMap<T, Integer> depth;
     Neighbors<T> neighbors;
     Integer maxDepth = 0;
-    Integer toGoalPathCost = 0;
+    Integer toGoalPathCost = -1;
     boolean reachedGoalState = false;
 
 
