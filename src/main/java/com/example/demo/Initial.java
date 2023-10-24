@@ -17,12 +17,13 @@ public class Initial {
     private long goalState = 12345678L;
     public Initial(MainApp mainApp) {
         VBox layout = new VBox(30);
-        layout.setStyle("-fx-background-color: #59f85d; -fx-padding: 20;");
+        layout.setStyle("-fx-background-color: #FFF3DA; -fx-padding: 20;");
 
         GridPane matrixGrid = createMatrixGrid(142375680L);
 
         Text title = new Text("Enter Your Puzzle");
-        title.setStyle("-fx-font-weight: bold;-fx-text-fill: #333;-fx-font-size: 20;");
+        title.setStyle("-fx-font-weight: bold;-fx-text-fill: #FFF;-fx-font-size: 20;-fx-alignment: center;");
+        HBox titleContainer = new HBox(title);
 
         Button DFSbutton = createButton("DFS");
         Button BFSbutton = createButton("BFS");
@@ -57,7 +58,7 @@ public class Initial {
             mainApp.changeScene(new MatrixPreview(mainApp, A_E.getPath(initState, goalState)).getScene());
         });
 
-        layout.getChildren().addAll(title, matrixGrid, traverseButtons);
+        layout.getChildren().addAll(titleContainer, matrixGrid, traverseButtons);
         scene = new Scene(layout, 550, 400);
     }
 
@@ -65,8 +66,8 @@ public class Initial {
 
     private Button createButton(String text){
         Button button = new Button(text);
-        button.setStyle("-fx-background-color: rgb(225,192,25);-fx-text-fill: #333;" +
-                "-fx-alignment: center;-fx-font-size: 20");
+        button.setStyle("-fx-background-color: rgb(61,48,162);-fx-text-fill: #FFF;" +
+                "-fx-alignment: center;-fx-font-size: 13;-fx-margin: 0 10px;");
         return button;
     }
 
@@ -95,8 +96,8 @@ public class Initial {
         for (int row = 2; row >= 0; row--) {
             for (int col = 2; col >= 0; col--) {
                 TextField textField = new TextField();
-                textField.setStyle("-fx-background-color: #34e039; -fx-border-color: #000000; " +
-                        "-fx-border-radius: 5; -fx-alignment: CENTER;");
+                textField.setStyle("-fx-background-color: #D0BFFF;-fx-border-width: 0;" +
+                        "-fx-border-radius: 0; -fx-alignment: CENTER;-fx-max-height: 30;");
 
                 // get the right most digit
                 int val = (int) state % 10;
