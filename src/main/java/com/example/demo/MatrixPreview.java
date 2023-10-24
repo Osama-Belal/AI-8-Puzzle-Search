@@ -1,14 +1,13 @@
 package com.example.demo;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -51,24 +50,33 @@ public class MatrixPreview {
     private GridPane createMatrixGrid(long state) {
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
-        gridPane.setHgap(5);
-        gridPane.setVgap(5);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
 
         // Populate the grid with TextField inputs (you can replace this with your actual input logic)
         for (int row = 2; row >= 0; row--) {
             for (int col = 2; col >= 0; col--) {
                 TextField textField = new TextField();
-                textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
-                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:30");
+                textField.setDisable(true);
+                textField.setStyle("-fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:30");
                 textField.setMinSize(100,100);
                 textField.setMaxSize(200, 200);
+
                 // get the right most digit
                 int val = (int) state % 10;
                 state /= 10;
 
+                if((state % 10) == 0) {
+                    textField.setText("");
+                    textField.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.
+                            valueOf("#DAFFFB"), CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+                else
+                    textField.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.
+                            valueOf("#03212DFF"), CornerRadii.EMPTY, Insets.EMPTY)));
+
                 // Set initial values (you can replace this with your logic)
                 textField.setText(String.valueOf(val));
-
                 gridPane.add(textField, col, row);
             }
         }
@@ -80,19 +88,22 @@ public class MatrixPreview {
         // Create Previous and Next buttons and handle their actions
         Button prevButton = new Button("Previous");
         Button nextButton = new Button("Next");
-        Button backButton = new Button("Back to Main Scene");
+        Button backButton = new Button("Main Menu");
+
         prevButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
                 "-fx-alignment: center;-fx-font-size: 15;");
-        prevButton.setMinSize(150, 50);
-        prevButton.setMaxSize(150, 50);
         nextButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
                 "-fx-alignment: center;-fx-font-size: 15;");
-        nextButton.setMinSize(150, 50);
-        nextButton.setMaxSize(150, 50);
         backButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
                 "-fx-alignment: center;-fx-font-size: 15;");
+
+        prevButton.setMaxSize(150, 50);
+        prevButton.setMinSize(150, 50);
+        nextButton.setMinSize(150, 50);
+        nextButton.setMaxSize(150, 50);
         backButton.setMinSize(150, 50);
         backButton.setMaxSize(150, 50);
+        prevButton.setDisable(currentStateIndex == 0);
 
         backButton.setOnAction(event -> {
             mainApp.changeScene(new Initial(mainApp).getScene());
@@ -104,6 +115,8 @@ public class MatrixPreview {
                 currentStateIndex--;
                 updateMatrix(matrixGrid, pathOfStates[currentStateIndex]);
             }
+            prevButton.setDisable(currentStateIndex == 0);
+            nextButton.setDisable(currentStateIndex == pathOfStates.length - 1);
         });
 
         nextButton.setOnAction(event -> {
@@ -112,6 +125,8 @@ public class MatrixPreview {
                 currentStateIndex++;
                 updateMatrix(matrixGrid, pathOfStates[currentStateIndex]);
             }
+            prevButton.setDisable(currentStateIndex == 0);
+            nextButton.setDisable(currentStateIndex == pathOfStates.length - 1);
         });
 
         // Create button container (HBox) and center the buttons
@@ -122,6 +137,7 @@ public class MatrixPreview {
     }
 
     private void updateMatrix(GridPane matrix, long state) {
+        boolean goalReached = state == 12345678L;
         for (int row = 0, col = 0;row*3 + col < 9;col++) {
             // Move to the next row if the current column exceeds 2
             row += col / 3;
@@ -130,7 +146,19 @@ public class MatrixPreview {
             // Update the TextField at the current row and column with the corresponding value
             TextField textField = (TextField) matrix.getChildren().get(row * 3 + col);
             textField.setText(String.valueOf(state % 10));
-            if((state % 10) == 0) {textField.setText("");}
+            if((state % 10) == 0) {
+                textField.setText("");
+                textField.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.
+                        valueOf("#DAFFFB"), CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            else if (goalReached){
+                textField.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.
+                        valueOf("#11D311FF"), CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            else {
+                textField.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.
+                        valueOf("#03212DFF"), CornerRadii.EMPTY, Insets.EMPTY)));
+            }
             state /= 10;
         }
     }
