@@ -3,8 +3,10 @@ package search_algorithms;
 import data_type.OurQueue;
 import data_type.OurStack;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class FirstSearch<T> extends Search<T>{//T is the type of the state
     public FirstSearch(char type){
@@ -17,6 +19,7 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
         explored = new HashSet<>() ;
         visited = new HashSet<>() ;
         childParent = new HashMap<>() ;
+        depth = new HashMap<>() ;
         neighbors = new Neighbors<>() ;
         toGoalPathCost = 0 ;
         reachedGoalState = false ;
@@ -30,17 +33,21 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
         frontier.push(initialState);
         childParent.put(initialState, initialState);
         visited.add(initialState);
+        depth.put(initialState, 0);
+
         //initialize current state variable
         T currentState ;
         while(! frontier.isEmpty())
         {
             //start with getting the front value in the frontier
             currentState = frontier.pop();
-            //add this state to explored hashset and check if we reached the goal state
+            maxDepth = Math.max(maxDepth, depth.get(currentState));
             explored.add(currentState);
+
             if(goalState.equals(currentState))
             {
                 reachedGoalState = true;
+                toGoalPathCost = depth.get(currentState);
                 return reachedGoalState;
             }
 
@@ -52,6 +59,7 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
                 {
                     frontier.push(neighbor);
                     childParent.put(neighbor, currentState);
+                    depth.put(neighbor, depth.get(currentState) + 1);
                     visited.add(neighbor);
                 }
             }
@@ -75,19 +83,17 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
 
     @Override
     public ArrayList<T> getPath(T initialState , T goalState ) {
-        //get the path from the goal state to the initial state
-        T state = (reachedGoalState)? goalState : null ;
-        //initialize the path to goal arraylist
         ArrayList<T> pathToGoal = new ArrayList<>();
+        T state = (reachedGoalState)? goalState : null ;
 
         //iterate till we reach the initial state
-        while (!(state.equals(initialState) || state.equals(null)))
+        while (!(state == null || state.equals(initialState)))
         {
             pathToGoal.add(state);
             state = getParent(state);
         }
-        //also assign the depth of the path to the depth variable here
-        toGoalPathCost = pathToGoal.size();
+        pathToGoal.add(initialState);
+        Collections.reverse(pathToGoal);
         return pathToGoal;
     }
 }

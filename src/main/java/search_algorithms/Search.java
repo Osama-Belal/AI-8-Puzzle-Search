@@ -2,7 +2,6 @@ package search_algorithms;
 
 import data_type.Frontier;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,11 +11,11 @@ public abstract class Search<T> {
     HashSet<T> explored;
     HashSet<T> visited;
     HashMap<T, T> childParent;
-    Neighbors<T> neighbors ;
-    Integer maxDepth ;
-    Integer toGoalPathCost;
-
-    boolean reachedGoalState;
+    HashMap<T, Integer> depth;
+    Neighbors<T> neighbors;
+    Integer maxDepth = 0;
+    Integer toGoalPathCost = 0;
+    boolean reachedGoalState = false;
 
 
     public abstract boolean search(T initialState, T goalState);
