@@ -11,7 +11,8 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     HashMap<T, Pair<Double, T>> childParent ;
 
     public HeuristicSearch(char type) {
-        //type is either M for Manhattan distance or E for Euclidean distance
+        // type is either M for Manhattan distance
+        // or E for Euclidean distance
         isManhattan = type == 'M';
         explored = new HashSet<>();
         visited = new HashSet<>();
@@ -107,7 +108,8 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     public ArrayList<T> getPath(T initialState, T goalState) {
         ArrayList<T> path = new ArrayList<>();
         T state = (reachedGoalState) ? goalState : null;
-        while (!Objects.equals(state, initialState)) {
+        while (!(state.equals(initialState) || state == null))
+        {
             path.add(state);
             state = childParent.get(state).getRight();
         }

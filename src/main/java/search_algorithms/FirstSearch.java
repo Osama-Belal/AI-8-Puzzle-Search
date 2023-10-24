@@ -76,9 +76,8 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
     @Override
     public ArrayList<T> getPath(T initialState , T goalState ) {
         //get the path from the goal state to the initial state
-        T state = (reachedGoalState)? goalState : null ;
-        //initialize the path to goal arraylist
         ArrayList<T> pathToGoal = new ArrayList<>();
+        T state = (reachedGoalState)? goalState : null ;
 
         //iterate till we reach the initial state
         while (!(state.equals(initialState) || state.equals(null)))
