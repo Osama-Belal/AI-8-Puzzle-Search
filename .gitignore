@@ -1,0 +1,8 @@
+
+.idea/misc.xml
+*.class
+target/classes/org/user_interface/Main.class
+*.class
+target/classes/search_algorithms/HeuristicSearch.class
+*.class
+target/classes/search_algorithms/HeuristicSearch.class

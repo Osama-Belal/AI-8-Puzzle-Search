@@ -43,14 +43,14 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     int initialState;
     HashMap<T, Pair<Double, T>> childParent = new HashMap<>();
 
-    public HeuristicSearch(char type) {//type is either M for Manhattan distance or E for Euclidean distance
+    public HeuristicSearch(char type, int goalState) {//type is either M for Manhattan distance or E for Euclidean distance
         isManhattan = type == 'M';
         explored = new HashSet<>();
         visited = new HashSet<>();
         neighbors = new Neighbors<>();
         depth = 0;
         reachedGoalState = false;
-        initialState = 12345678;
+        initialState = goalState;
     }
 
 

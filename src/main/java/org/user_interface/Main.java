@@ -7,16 +7,18 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("""
-                Welcome To 8-Puzzle Solver :)
+        System.out.println("Welcome To 8-Puzzle Solver :)");
+
+        int choice = 0;
+        while (choice != 4) {
+
+            System.out.println("""
                 Enter your choice:
                 1. DFS
                 2. BFS
                 3. A*
                 4. Exit""");
 
-        int choice = 0;
-        while (choice != 4) {
             Scanner scanner = new Scanner(System.in);
             int initialState;
             int goalState;
@@ -48,7 +50,6 @@ public class Main {
                 }
                 case 3 -> {
                     char heuristicType;
-                    System.out.println("محدش مهتم");
                     GetStates:
                     {
                         System.out.println("Enter initial state:");
@@ -63,7 +64,7 @@ public class Main {
                             heuristicType = scanner.next().toUpperCase().charAt(0);
                         }
                     }
-                    Search<Integer> aStar = new HeuristicSearch<>(heuristicType);
+                    Search<Integer> aStar = new HeuristicSearch<>(heuristicType, goalState);
                     System.out.println("the result is: " + aStar.search(initialState, goalState));
                     System.out.println("Path from initial state to goal state:");
                     System.out.println(aStar.getPath(initialState, goalState));
