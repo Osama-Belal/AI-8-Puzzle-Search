@@ -4,9 +4,10 @@ import data_type.OurQueue;
 import data_type.OurStack;
 
 import java.util.*;
+import java.util.function.Function;
 
-public class FirstSearch<T> extends Search<T>{
-    public FirstSearch(char type){
+public class FirstSearch<T> extends Search<T>{//T is the type of the state
+    public FirstSearch(char type){//type is either 'B' or 'D' or 'A'
         switch (type) {
             case 'B' -> frontier = new OurQueue<>();
             case 'D' -> frontier = new OurStack<>();
@@ -20,6 +21,7 @@ public class FirstSearch<T> extends Search<T>{
         depth = 0 ;
         reachedGoalState = false;
     }
+
 
     @Override
     public boolean search(T initialState, T goalState) {

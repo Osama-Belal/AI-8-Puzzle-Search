@@ -1,7 +1,6 @@
 package org.user_interface;
 
-import search_algorithms.FirstSearch;
-import search_algorithms.Search;
+import search_algorithms.*;
 
 import java.util.Scanner;
 
@@ -26,7 +25,8 @@ public class Main {
 
             switch (choice) {
                 case 1 -> {
-                    GetStates: {
+                    GetStates:
+                    {
                         System.out.println("Enter initial state:");
                         initialState = scanner.nextInt();
                         System.out.println("Enter goal state:");
@@ -36,7 +36,8 @@ public class Main {
                     dfs.search(initialState, goalState);
                 }
                 case 2 -> {
-                    GetStates: {
+                    GetStates:
+                    {
                         System.out.println("Enter initial state:");
                         initialState = scanner.nextInt();
                         System.out.println("Enter goal state:");
@@ -46,7 +47,29 @@ public class Main {
                     bfs.search(initialState, goalState);
                 }
                 case 3 -> {
+                    char heuristicType;
                     System.out.println("محدش مهتم");
+                    GetStates:
+                    {
+                        System.out.println("Enter initial state:");
+                        initialState = scanner.nextInt();
+                        System.out.println("Enter goal state:");
+                        goalState = scanner.nextInt();
+                        System.out.println("Enter heuristic type (M or m for Manhattan distance or E or e for Euclidean distance):");
+                        heuristicType = scanner.next().toUpperCase().charAt(0);
+                        while (heuristicType!='M'&&heuristicType!='E') {
+                            System.out.println("Wrong input!");
+                            System.out.println("Enter heuristic type (M or m for Manhattan distance or E or e for Euclidean distance):");
+                            heuristicType = scanner.next().toUpperCase().charAt(0);
+                        }
+                    }
+                    Search<Integer> aStar = new HeuristicSearch<>(heuristicType);
+                    System.out.println("the result is: " + aStar.search(initialState, goalState));
+                    System.out.println("Path from initial state to goal state:");
+                    System.out.println(aStar.getPath(initialState, goalState));
+                    System.out.println("Nodes expanded: " + aStar.getNodesExpanded());
+                    System.out.println("Cost of path: " + aStar.getCostOfPath());
+                    System.out.println("Depth: " + aStar.getDepth());
                 }
                 case 4 -> System.out.println("Bye :)");
                 default -> System.out.println("Wrong input!");
