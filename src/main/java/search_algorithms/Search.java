@@ -24,5 +24,6 @@ public abstract class Search<T> {
     public abstract Integer getCostOfPath();
     public abstract Integer getNodesExpanded();
     public abstract ArrayList<T> getPath(T initialState, T goalState);
+    public boolean isReachedGoalState() { return reachedGoalState; }
 
 }

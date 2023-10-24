@@ -40,9 +40,9 @@ public class Scene1 {
         Button nextButton = new Button("Next");
         Button backButton = new Button("Back to Main Scene");
 
-        backButton.setOnAction(event -> {
-            mainApp.changeScene(new Initial(mainApp).getScene());
-        });
+//        backButton.setOnAction(event -> {
+//            mainApp.changeScene(new Initial(mainApp).getScene());
+//        });
 
         prevButton.setOnAction(event -> {
             // Handle Previous button action

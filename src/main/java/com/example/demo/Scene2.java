@@ -13,7 +13,7 @@ public class Scene2 {
         layout.setStyle("-fx-padding: 20;");
 
         Button backButton = new Button("Back to Main Scene");
-        backButton.setOnAction(e -> mainApp.changeScene(new Initial(mainApp).getScene()));
+//        backButton.setOnAction(e -> mainApp.changeScene(new Initial(mainApp).getScene()));
 
         layout.getChildren().addAll(backButton);
 

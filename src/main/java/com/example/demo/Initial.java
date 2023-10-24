@@ -2,12 +2,16 @@ package com.example.demo;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+
 import search_algorithms.FirstSearch;
 import search_algorithms.HeuristicSearch;
 import search_algorithms.Search;
@@ -19,7 +23,7 @@ public class Initial {
         VBox layout = new VBox(30);
         layout.setStyle("-fx-background-color: #DAFFFB; -fx-padding: 20; -fx-alignment: center;");
 
-        GridPane matrixGrid = createMatrixGrid(142375680L);
+        GridPane matrixGrid = createMatrixGrid(12345678L);
 
         Text title = new Text("Enter Your Puzzle");
         HBox titleContainer = new HBox(title);
@@ -35,27 +39,34 @@ public class Initial {
         DFSbutton.setOnAction(e -> {
             Search<Long> dfs = new FirstSearch<>('D');
             long initState = getMatrixState(matrixGrid);
-            System.out.println(initState);
             dfs.search(initState, goalState);
-            mainApp.changeScene(new MatrixPreview(mainApp, dfs.getPath(initState, goalState)).getScene());
+            if(dfs.isReachedGoalState())
+                mainApp.changeScene(new MatrixPreview(mainApp, dfs.getPath(initState, goalState)).getScene());
+            else showAlert();
         });
         BFSbutton.setOnAction(e -> {
             Search<Long> bfs = new FirstSearch<>('B');
             long initState = getMatrixState(matrixGrid);
             bfs.search(initState, goalState);
-            mainApp.changeScene(new MatrixPreview(mainApp, bfs.getPath(initState, goalState)).getScene());
+            if(bfs.isReachedGoalState())
+                    mainApp.changeScene(new MatrixPreview(mainApp, bfs.getPath(initState, goalState)).getScene());
+                else showAlert();
         });
         AStarEuclideanbutton.setOnAction(e -> {
             Search<Long> A_M = new HeuristicSearch<>('M');
             long initState = getMatrixState(matrixGrid);
             A_M.search(initState, goalState);
-            mainApp.changeScene(new MatrixPreview(mainApp, A_M.getPath(initState, goalState)).getScene());
+            if(A_M.isReachedGoalState())
+                mainApp.changeScene(new MatrixPreview(mainApp, A_M.getPath(initState, goalState)).getScene());
+            else showAlert();
         });
         AStarManattanbutton.setOnAction(e -> {
             Search<Long> A_E = new HeuristicSearch<>('M');
             long initState = getMatrixState(matrixGrid);
             A_E.search(initState, goalState);
-            mainApp.changeScene(new MatrixPreview(mainApp, A_E.getPath(initState, goalState)).getScene());
+            if(A_E.isReachedGoalState())
+                mainApp.changeScene(new MatrixPreview(mainApp, A_E.getPath(initState, goalState)).getScene());
+            else showAlert();
         });
 
         layout.getChildren().addAll(titleContainer, matrixGrid, traverseButtons);
@@ -112,7 +123,16 @@ public class Initial {
                 gridPane.add(textField, col, row);
             }
         }
-
         return gridPane;
+    }
+
+
+    private void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("No Solution Found");
+        alert.setContentText("Please try again with another puzzle");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.showAndWait();
     }
 }

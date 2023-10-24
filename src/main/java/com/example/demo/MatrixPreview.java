@@ -103,7 +103,9 @@ public class MatrixPreview {
         nextButton.setMaxSize(150, 50);
         backButton.setMinSize(150, 50);
         backButton.setMaxSize(150, 50);
+
         prevButton.setDisable(currentStateIndex == 0);
+        nextButton.setDisable(currentStateIndex == pathOfStates.length - 1);
 
         backButton.setOnAction(event -> {
             mainApp.changeScene(new Initial(mainApp).getScene());
