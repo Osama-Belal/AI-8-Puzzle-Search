@@ -7,19 +7,19 @@ import java.util.*;
 import java.util.function.Function;
 
 public class FirstSearch<T> extends Search<T>{//T is the type of the state
-    public FirstSearch(char type){//type is either 'B' or 'D' or 'A'
+    public FirstSearch(char type){
+        //type is either 'B' or 'D' or 'A'
         switch (type) {
             case 'B' -> frontier = new OurQueue<>();
             case 'D' -> frontier = new OurStack<>();
             default -> System.err.println("wrong choice");
         }
-
-        explored = new HashSet<>();
-        visited = new HashSet<>();
-        childParent = new HashMap<>();
-        neighbors = new Neighbors<>();
-        depth = 0 ;
-        reachedGoalState = false;
+        explored = new HashSet<>() ;
+        visited = new HashSet<>() ;
+        childParent = new HashMap<>() ;
+        neighbors = new Neighbors<>() ;
+        toGoalPathCost = 0 ;
+        reachedGoalState = false ;
     }
 
 
@@ -48,7 +48,7 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
             //push them to frontier, frontier U explored hashset and to the parent-child hashmap
             for(T neighbor : neighbors.getNeighbors(currentState))
             {
-                if(visited.contains(neighbor))
+                if(!(visited.contains(neighbor)))
                 {
                     frontier.push(neighbor);
                     childParent.put(neighbor, currentState);
@@ -65,13 +65,13 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
     public T getParent(T state) { return childParent.get(state); }
 
     @Override
-    public Integer getDepth() { return depth; }
+    public Integer getDepth() { return maxDepth; }
 
     //as here the cost of each step is one
-    public Integer getCostOfPath() { return depth ; }
+    public Integer getCostOfPath() { return toGoalPathCost ; }
 
     @Override
-    public ArrayList<T> getNodesExpanded() { return new ArrayList<>(explored); }
+    public Integer getNodesExpanded() { return explored.size(); }
 
     @Override
     public ArrayList<T> getPath(T initialState , T goalState ) {
@@ -87,7 +87,7 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
             state = getParent(state);
         }
         //also assign the depth of the path to the depth variable here
-        depth = pathToGoal.size();
+        toGoalPathCost = pathToGoal.size();
         return pathToGoal;
     }
 }
