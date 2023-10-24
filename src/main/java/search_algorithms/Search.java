@@ -13,7 +13,8 @@ public abstract class Search<T> {
     HashSet<T> visited;
     HashMap<T, T> childParent;
     Neighbors<T> neighbors ;
-    Integer depth ;
+    Integer maxDepth ;
+    Integer toGoalPathCost;
 
     boolean reachedGoalState;
 
@@ -22,7 +23,7 @@ public abstract class Search<T> {
     public abstract T getParent(T state);
     public abstract Integer getDepth();
     public abstract Integer getCostOfPath();
-    public abstract ArrayList<T> getNodesExpanded();
+    public abstract Integer getNodesExpanded();
     public abstract ArrayList<T> getPath(T initialState, T goalState);
 
 }
