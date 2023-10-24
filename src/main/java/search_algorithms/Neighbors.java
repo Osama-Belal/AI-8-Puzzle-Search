@@ -35,7 +35,13 @@ class Neighbors<T> {
                 neighbors.add((T) (Integer) newState);
             }
         }
+<<<<<<< Updated upstream
         return neighbors;
+=======
+
+        //System.out.println("Neighbors of (" + state + ") are ------>  " + neighborsList);
+        return neighborsList;
+>>>>>>> Stashed changes
     }
 
 

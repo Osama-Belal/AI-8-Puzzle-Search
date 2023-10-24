@@ -13,6 +13,7 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
             case 'D' -> frontier = new OurStack<>();
             default -> System.err.println("wrong choice");
         }
+<<<<<<< Updated upstream
 
         explored = new HashSet<>();
         visited = new HashSet<>();
@@ -20,6 +21,15 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
         neighbors = new Neighbors<>();
         depth = 0 ;
         reachedGoalState = false;
+=======
+        explored = new HashSet<>() ;
+        visited = new HashSet<>() ;
+        childParent = new HashMap<>() ;
+        depth = new HashMap<>() ;
+        neighbors = new Neighbors<>() ;
+        toGoalPathCost = -1 ;
+        reachedGoalState = false ;
+>>>>>>> Stashed changes
     }
 
 

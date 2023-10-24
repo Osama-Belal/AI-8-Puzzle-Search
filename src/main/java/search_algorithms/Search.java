@@ -12,10 +12,18 @@ public abstract class Search<T> {
     HashSet<T> explored;
     HashSet<T> visited;
     HashMap<T, T> childParent;
+<<<<<<< Updated upstream
     Neighbors<T> neighbors ;
     Integer depth ;
 
     boolean reachedGoalState;
+=======
+    HashMap<T, Integer> depth;
+    Neighbors<T> neighbors;
+    Integer maxDepth = 0;
+    Integer toGoalPathCost = -1;
+    boolean reachedGoalState = false;
+>>>>>>> Stashed changes
 
 
     public abstract boolean search(T initialState, T goalState);

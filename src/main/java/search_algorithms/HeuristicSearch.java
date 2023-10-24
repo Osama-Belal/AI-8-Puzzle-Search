@@ -6,8 +6,29 @@ import java.util.*;
 
 
 public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
+<<<<<<< Updated upstream
     double manhattanDistance(T state) {
         int stateInt = (Integer) state;
+=======
+    boolean isManhattan;
+    HashMap<T, Pair<Double, T>> childParent ;
+
+    public HeuristicSearch(char type) {
+        // type is either M for Manhattan distance
+        // or E for Euclidean distance
+        toGoalPathCost = -1;
+        maxDepth = 0;
+        isManhattan = type == 'M';
+        explored = new HashSet<>();
+        visited = new HashSet<>();
+        neighbors = new Neighbors<>();
+        childParent = new HashMap<>();
+        depth = new HashMap<>();
+    }
+
+    int manhattanDistance(T state) {
+        long stateInt = (Long) state;
+>>>>>>> Stashed changes
 
         int manhattanDistance = 0;
         for (int i = 8; i >= 0; i--) {
@@ -75,13 +96,33 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
 
             for (T neighbor : neighbors.getNeighbors(currentState)) {
                 if (!visited.contains(neighbor)) {
+<<<<<<< Updated upstream
                     double depth = childParent.get(currentState).getLeft() + 1;
                     this.depth = (int)Math.max(this.depth, depth);
                     double fn = (this.isManhattan ? manhattanDistance(neighbor) : EuclideanDistance(neighbor)) + depth;
+=======
+                    double currDepth = childParent.get(currentState).getLeft() + 1;
+                    double fn = (this.isManhattan ? manhattanDistance(neighbor) : EuclideanDistance(neighbor)) + currDepth;
+>>>>>>> Stashed changes
                     frontier.add(Pair.of(fn, neighbor));
                     childParent.put(neighbor, Pair.of(depth, currentState));
                     visited.add(neighbor);
                 }
+                // if the neighbor is already visited but not explored yet
+                else if(!explored.contains(neighbor))
+                {
+                    // we will check if the current depth is less than the depth of the neighbor state
+                    // if so, we will update the depth of the neighbor state and add neigbour again in frontier with the new depth
+                    if(depth.get(neighbor) > depth.get(currentState) + 1){
+                        double currDepth = childParent.get(currentState).getLeft() + 1;
+                        double fn = (this.isManhattan ? manhattanDistance(neighbor) : EuclideanDistance(neighbor)) + currDepth;
+                        frontier.add(Pair.of(fn, neighbor));
+                        childParent.put(neighbor, Pair.of(currDepth, currentState));
+                        depth.put(neighbor, depth.get(currentState) + 1);
+                    }
+                }
+
+
             }
         }
         return false;
