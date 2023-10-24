@@ -3,8 +3,10 @@ package search_algorithms;
 import data_type.OurQueue;
 import data_type.OurStack;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class FirstSearch<T> extends Search<T>{//T is the type of the state
     public FirstSearch(char type){
@@ -81,18 +83,17 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
 
     @Override
     public ArrayList<T> getPath(T initialState , T goalState ) {
-        //get the path from the goal state to the initial state
         ArrayList<T> pathToGoal = new ArrayList<>();
         T state = (reachedGoalState)? goalState : null ;
 
         //iterate till we reach the initial state
-        while (!(state.equals(initialState) || state.equals(null)))
+        while (!(state == null || state.equals(initialState)))
         {
             pathToGoal.add(state);
             state = getParent(state);
         }
-        //also assign the depth of the path to the depth variable here
-        toGoalPathCost = pathToGoal.size();
+        pathToGoal.add(initialState);
+        Collections.reverse(pathToGoal);
         return pathToGoal;
     }
 }
