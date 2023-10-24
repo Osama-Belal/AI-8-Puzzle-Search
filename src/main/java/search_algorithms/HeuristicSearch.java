@@ -6,6 +6,22 @@ import java.util.*;
 
 
 public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
+    boolean isManhattan;
+    int initialState;
+    HashMap<T, Pair<Double, T>> childParent ;
+
+    public HeuristicSearch(char type) {
+        //type is either M for Manhattan distance or E for Euclidean distance
+        isManhattan = type == 'M';
+        explored = new HashSet<>();
+        visited = new HashSet<>();
+        neighbors = new Neighbors<>();
+        toGoalPathCost = 0;
+        reachedGoalState = false;
+        initialState = 12345678;
+        childParent = new HashMap<>();
+    }
+
     double manhattanDistance(T state) {
         int stateInt = (Integer) state;
 
@@ -39,20 +55,6 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
         return euclideanDistance;
     }
 
-    boolean isManhattan;
-    int initialState;
-    HashMap<T, Pair<Double, T>> childParent = new HashMap<>();
-
-    public HeuristicSearch(char type) {//type is either M for Manhattan distance or E for Euclidean distance
-        isManhattan = type == 'M';
-        explored = new HashSet<>();
-        visited = new HashSet<>();
-        neighbors = new Neighbors<>();
-        depth = 0;
-        reachedGoalState = false;
-        initialState = 12345678;
-    }
-
 
     // now we will implement A* search algorithm
     @Override
@@ -76,7 +78,7 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
             for (T neighbor : neighbors.getNeighbors(currentState)) {
                 if (!visited.contains(neighbor)) {
                     double depth = childParent.get(currentState).getLeft() + 1;
-                    this.depth = (int)Math.max(this.depth, depth);
+                    this.toGoalPathCost = (int)Math.max(this.toGoalPathCost, depth);
                     double fn = (this.isManhattan ? manhattanDistance(neighbor) : EuclideanDistance(neighbor)) + depth;
                     frontier.add(Pair.of(fn, neighbor));
                     childParent.put(neighbor, Pair.of(depth, currentState));
@@ -94,7 +96,7 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
 
     @Override
     public Integer getDepth() {
-        return this.depth;
+        return this.toGoalPathCost;
     }
 
     @Override
@@ -103,8 +105,8 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     }
 
     @Override
-    public ArrayList<T> getNodesExpanded() {
-        return new ArrayList<>(explored);
+    public Integer getNodesExpanded() {
+        return explored.size();
     }
 
     @Override
