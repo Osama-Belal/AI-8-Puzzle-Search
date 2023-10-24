@@ -7,6 +7,13 @@ class BFSTest {
 
     FirstSearch bfs = new FirstSearch<>('B');
     long goalState = 123456780L;
+    Integer minDepth = 0;
+    Integer maxDepth = 0;
+    Integer minPathCost = 0;
+    Integer maxPathCost = 0;
+
+    Integer minNodesExpanded = 0;
+    Integer maxNodesExpanded = 0;
     @Test
     void SearchAndFindGoal()
     {
@@ -38,4 +45,23 @@ class BFSTest {
         assertFalse(searchResult);
         System.out.println(bfs.getNodesExpanded());
     }
+
+    @Test
+    void getDepth() {
+        bfs.search(123456870L, goalState);
+        assertTrue( (minDepth <= bfs.getDepth() && bfs.getDepth() <= maxDepth));
+    }
+
+    @Test
+    void getCostOfPath() {
+        bfs.search(123456870L, goalState);
+        assertTrue( (minPathCost <= bfs.getCostOfPath() && bfs.getCostOfPath() <= maxPathCost));
+    }
+
+    @Test
+    void getNodesExpanded() {
+        bfs.search(123456870L, goalState);
+        assertTrue( (minNodesExpanded <= bfs.getNodesExpanded() && bfs.getNodesExpanded() <= maxNodesExpanded));
+    }
+
 }

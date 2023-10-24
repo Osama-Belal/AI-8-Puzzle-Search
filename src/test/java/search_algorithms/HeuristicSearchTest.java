@@ -10,6 +10,14 @@ class HeuristicSearchTest {
     HeuristicSearch<Long> heuristicSearchE = new HeuristicSearch<>('E');
     long goalState = 123456780L;
 
+    Integer minDepth = 0;
+    Integer maxDepth = 0;
+    Integer minPathCost = 0;
+    Integer maxPathCost = 0;
+
+    Integer minNodesExpanded = 0;
+    Integer maxNodesExpanded = 0;
+
     @Test
     void manhattanDistanceOne() {
         int dist = heuristicSearchM.manhattanDistance(243657801L);
@@ -102,19 +110,40 @@ class HeuristicSearchTest {
 
 
     @Test
-    void getDepth() {
-
+    void getDepthManhattan() {
+        heuristicSearchM.search(123456870L, goalState);
+        assertTrue( (minDepth <= heuristicSearchM.getDepth() && heuristicSearchM.getDepth() <= maxDepth));
     }
-//
-//    @Test
-//    void getCostOfPath() {
-//    }
-//
-//    @Test
-//    void getNodesExpanded() {
-//    }
-//
-//    @Test
-//    void getPath() {
-//    }
+
+    @Test
+    void getCostOfPathManhattan() {
+        heuristicSearchM.search(123456870L, goalState);
+        assertTrue( (minPathCost <= heuristicSearchM.getCostOfPath() && heuristicSearchM.getCostOfPath() <= maxPathCost));
+    }
+
+    @Test
+    void getNodesExpandedManhattan() {
+        heuristicSearchM.search(123456870L, goalState);
+        assertTrue( (minNodesExpanded <= heuristicSearchM.getNodesExpanded() && heuristicSearchM.getNodesExpanded() <= maxNodesExpanded));
+    }
+
+
+    //
+    @Test
+    void getDepthEuclidean() {
+        heuristicSearchE.search(123456870L, goalState);
+        assertTrue( (minDepth <= heuristicSearchE.getDepth() && heuristicSearchE.getDepth() <= maxDepth));
+    }
+
+    @Test
+    void getCostOfPathEuclidean() {
+        heuristicSearchE.search(123456870L, goalState);
+        assertTrue( (minPathCost <= heuristicSearchE.getCostOfPath() && heuristicSearchE.getCostOfPath() <= maxPathCost));
+    }
+
+    @Test
+    void getNodesExpandedEuclidean() {
+        heuristicSearchE.search(123456870L, goalState);
+        assertTrue( (minNodesExpanded <= heuristicSearchE.getNodesExpanded() && heuristicSearchE.getNodesExpanded() <= maxNodesExpanded));
+    }
 }
