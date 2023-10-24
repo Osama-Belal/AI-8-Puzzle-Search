@@ -9,7 +9,7 @@ public class Scene2 {
     private Scene scene;
 
     public Scene2(MainApp mainApp) {
-        VBox layout = new VBox(20);
+        VBox layout = new VBox(30);
         layout.setStyle("-fx-padding: 20;");
 
         Button backButton = new Button("Back to Main Scene");
@@ -17,7 +17,7 @@ public class Scene2 {
 
         layout.getChildren().addAll(backButton);
 
-        scene = new Scene(layout, 300, 200);
+        scene = new Scene(layout, 700, 550);
     }
 
     public Scene getScene() {
