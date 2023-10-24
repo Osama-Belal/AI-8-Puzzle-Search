@@ -17,6 +17,7 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
         explored = new HashSet<>() ;
         visited = new HashSet<>() ;
         childParent = new HashMap<>() ;
+        depth = new HashMap<>() ;
         neighbors = new Neighbors<>() ;
         toGoalPathCost = 0 ;
         reachedGoalState = false ;
@@ -30,17 +31,21 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
         frontier.push(initialState);
         childParent.put(initialState, initialState);
         visited.add(initialState);
+        depth.put(initialState, 0);
+
         //initialize current state variable
         T currentState ;
         while(! frontier.isEmpty())
         {
             //start with getting the front value in the frontier
             currentState = frontier.pop();
-            //add this state to explored hashset and check if we reached the goal state
+            maxDepth = Math.max(maxDepth, depth.get(currentState));
             explored.add(currentState);
+
             if(goalState.equals(currentState))
             {
                 reachedGoalState = true;
+                toGoalPathCost = depth.get(currentState);
                 return reachedGoalState;
             }
 
@@ -52,6 +57,7 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
                 {
                     frontier.push(neighbor);
                     childParent.put(neighbor, currentState);
+                    depth.put(neighbor, depth.get(currentState) + 1);
                     visited.add(neighbor);
                 }
             }

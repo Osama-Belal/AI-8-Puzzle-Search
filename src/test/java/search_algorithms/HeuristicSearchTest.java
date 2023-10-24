@@ -100,13 +100,11 @@ class HeuristicSearchTest {
         System.out.println(heuristicSearchM.getNodesExpanded());
     }
 
-//    @Test
-//    void getParent() {
-//    }
-//
-//    @Test
-//    void getDepth() {
-//    }
+
+    @Test
+    void getDepth() {
+
+    }
 //
 //    @Test
 //    void getCostOfPath() {
