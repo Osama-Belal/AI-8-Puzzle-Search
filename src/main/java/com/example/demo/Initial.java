@@ -30,8 +30,9 @@ public class Initial {
         GridPane matrixGrid = createMatrixGrid(12345678L);
 
         Text title = new Text("Enter Your Puzzle");
+        title.setStyle("-fx-font-size: 50; -fx-fill: #04364A; -fx-font-weight: bold;");
         HBox titleContainer = new HBox(title);
-        titleContainer.setStyle("-fx-font-weight: bold; -fx-font-size: 50 ; -fx-alignment: center; -fx-text-fill: #FFF;");
+        titleContainer.setStyle("-fx-font-weight: bold; -fx-font-size: 50 ; -fx-alignment: center;");
 
         Button DFSbutton = createButton("DFS");
         Button BFSbutton = createButton("BFS");
