@@ -57,6 +57,7 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     // now we will implement A* search algorithm
     @Override
     public boolean search(T initialState, T goalState) {
+        System.out.println("Start Searching");
         PriorityQueue<Pair<Double, T>> frontier = new PriorityQueue<>((a, b) -> Long.compare(a.getKey().compareTo(b.getKey()), 0));
         double Fn = this.isManhattan ? manhattanDistance(initialState) : EuclideanDistance(initialState);
         frontier.add(Pair.of(Fn, initialState));

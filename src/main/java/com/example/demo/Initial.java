@@ -1,14 +1,13 @@
 package com.example.demo;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 
@@ -19,9 +18,14 @@ import search_algorithms.Search;
 public class Initial {
     private Scene scene;
     private long goalState = 12345678L;
+    public int depth ;
+    public int costToReach ;
+    public int nodesExpanded ;
+    public int runningTime ;
+
     public Initial(MainApp mainApp) {
         VBox layout = new VBox(30);
-        layout.setStyle("-fx-background-color: #DAFFFB; -fx-padding: 20; -fx-alignment: center;");
+        layout.setStyle("-fx-background-color: #BEF2FF; -fx-padding: 20; -fx-alignment: center;");
 
         GridPane matrixGrid = createMatrixGrid(12345678L);
 
@@ -40,8 +44,14 @@ public class Initial {
             Search<Long> dfs = new FirstSearch<>('D');
             long initState = getMatrixState(matrixGrid);
             dfs.search(initState, goalState);
-            if(dfs.isReachedGoalState())
-                mainApp.changeScene(new MatrixPreview(mainApp, dfs.getPath(initState, goalState)).getScene());
+            if(dfs.isReachedGoalState()) {
+                depth = dfs.getDepth();
+                costToReach = dfs.getCostOfPath();
+                nodesExpanded = dfs.getNodesExpanded();
+//                runningTime = dfs.getRunningTime();
+                mainApp.changeScene(new MatrixPreview(mainApp, dfs.getPath(initState, goalState), nodesExpanded, depth, costToReach).getScene());
+
+            }
             else showAlert();
         });
         BFSbutton.setOnAction(e -> {
@@ -49,28 +59,48 @@ public class Initial {
             long initState = getMatrixState(matrixGrid);
             bfs.search(initState, goalState);
             if(bfs.isReachedGoalState())
-                    mainApp.changeScene(new MatrixPreview(mainApp, bfs.getPath(initState, goalState)).getScene());
+            {
+                depth = bfs.getDepth();
+                costToReach = bfs.getCostOfPath();
+                nodesExpanded = bfs.getNodesExpanded();
+//                runningTime = bfs.getRunningTime();
+                mainApp.changeScene(new MatrixPreview(mainApp, bfs.getPath(initState, goalState), nodesExpanded, depth, costToReach).getScene());
+
+
+            }
+
                 else showAlert();
         });
         AStarEuclideanbutton.setOnAction(e -> {
             Search<Long> A_M = new HeuristicSearch<>('M');
             long initState = getMatrixState(matrixGrid);
             A_M.search(initState, goalState);
-            if(A_M.isReachedGoalState())
-                mainApp.changeScene(new MatrixPreview(mainApp, A_M.getPath(initState, goalState)).getScene());
+            if(A_M.isReachedGoalState()) {
+                depth = A_M.getDepth();
+                costToReach = A_M.getCostOfPath();
+                nodesExpanded = A_M.getNodesExpanded();
+//                runningTime = A_M.getRunningTime();
+                mainApp.changeScene(new MatrixPreview(mainApp, A_M.getPath(initState, goalState), nodesExpanded, depth, costToReach).getScene());
+            }
             else showAlert();
         });
         AStarManattanbutton.setOnAction(e -> {
             Search<Long> A_E = new HeuristicSearch<>('M');
             long initState = getMatrixState(matrixGrid);
+
             A_E.search(initState, goalState);
-            if(A_E.isReachedGoalState())
-                mainApp.changeScene(new MatrixPreview(mainApp, A_E.getPath(initState, goalState)).getScene());
+            if(A_E.isReachedGoalState()) {
+                depth = A_E.getDepth();
+                costToReach = A_E.getCostOfPath();
+                nodesExpanded = A_E.getNodesExpanded();
+//                runningTime = A_E.getRunningTime();
+                mainApp.changeScene(new MatrixPreview(mainApp, A_E.getPath(initState, goalState), nodesExpanded, depth, costToReach).getScene());
+            }
             else showAlert();
         });
 
         layout.getChildren().addAll(titleContainer, matrixGrid, traverseButtons);
-        scene = new Scene(layout, 700, 550);
+        scene = new Scene(layout, 1024, 768);
     }
 
     public Scene getScene() { return scene; }
@@ -111,8 +141,8 @@ public class Initial {
             for (int col = 2; col >= 0; col--) {
                 TextField textField = new TextField();
                 textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
-                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:30");
-                textField.setMinSize(100,100);
+                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                textField.setMinSize(150,150);
                 textField.setMaxSize(200, 200);
                 // get the right most digit
                 int val = (int) state % 10;
@@ -130,9 +160,19 @@ public class Initial {
     private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-        alert.setHeaderText("No Solution Found");
-        alert.setContentText("Please try again with another puzzle");
+        Text text = new Text("No Solution Found \n");
+        //Red
+        text.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-fill: #CD1818;");
+        alert.getDialogPane().setHeader(text);
+        //make title in center
+        alert.getDialogPane().setPadding(new Insets(20));
+        alert.getDialogPane().setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.valueOf("#BEF2FF"), CornerRadii.EMPTY, Insets.EMPTY)));
+        Text text1 = new Text("Please try again with another puzzle !!");
+        text1.setStyle("-fx-font-size: 25px;; -fx-fill: #04364A;");
+        alert.getDialogPane().setContent(text1);
+        alert.getDialogPane().setMinSize(500, 300);
         alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setResizable(true);
         alert.showAndWait();
     }
 }

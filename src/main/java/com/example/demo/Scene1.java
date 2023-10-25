@@ -25,7 +25,7 @@ public class Scene1 {
         layout.setStyle("-fx-padding: 20;");
 
 //        layout.getChildren().addAll(backButton);
-        scene = new Scene(root, 700, 550);
+        scene = new Scene(layout, 1024, 768);
     }
 
     public Scene getScene() {
