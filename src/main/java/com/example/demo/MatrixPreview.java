@@ -21,9 +21,10 @@ public class MatrixPreview {
     private int nodesExpanded;
     private int depth;
     private int costToReach;
+    private long runningTime;
 
 
-    public MatrixPreview(MainApp mainApp, ArrayList<Long> path, int nodesExpanded, int depth, int costToReach) {
+    public MatrixPreview(MainApp mainApp, ArrayList<Long> path, int nodesExpanded, int depth, int costToReach, long runningTime) {
         VBox layout = new VBox(30);
         layout.setStyle("-fx-background-color: #BEF2FF; -fx-padding: 20; -fx-alignment: center;");
 
@@ -33,6 +34,7 @@ public class MatrixPreview {
         this.nodesExpanded = nodesExpanded;
         this.depth = depth;
         this.costToReach = costToReach;
+        this.runningTime = runningTime;
 
         // Create UI components
         GridPane matrixGrid = createMatrixGrid(this.pathOfStates[0]); // Create a 3x3 matrix grid
@@ -179,7 +181,8 @@ public class MatrixPreview {
 
         Text text1 = new Text("1. Number of nodes Expanded: " + nodesExpanded + "\n" +
                 "2. Max Depth of the solution: " + depth + "\n" +
-                "3. Cost to reach the solution: " + costToReach + "\n" );
+                "3. Cost to reach the solution: " + costToReach + "\n"
+                + "4. Running Time: " + runningTime + " ms");
         text1.setStyle("-fx-font-size: 25px;; -fx-fill: #04364A;");
         alert.getDialogPane().setContent(text1);
 

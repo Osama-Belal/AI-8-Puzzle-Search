@@ -58,13 +58,13 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     @Override
     public boolean search(T initialState, T goalState) {
         System.out.println("Start Searching");
+        startTime = System.nanoTime();
         PriorityQueue<Pair<Double, T>> frontier = new PriorityQueue<>((a, b) -> Long.compare(a.getKey().compareTo(b.getKey()), 0));
         double Fn = this.isManhattan ? manhattanDistance(initialState) : EuclideanDistance(initialState);
         frontier.add(Pair.of(Fn, initialState));
         childParent.put(initialState, Pair.of(0.0, initialState));
         visited.add(initialState);
         depth.put(initialState, 0);
-
         T currentState;
         while (!frontier.isEmpty()) {
             currentState = frontier.poll().getValue();
@@ -74,6 +74,8 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
             if (goalState.equals(currentState)) {
                 reachedGoalState = true;
                 toGoalPathCost = depth.get(currentState);
+                endTime = System.nanoTime();
+                runningTime = ((endTime - startTime) / 1000000L);
                 return true;
             }
 
@@ -89,6 +91,8 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
                 }
             }
         }
+        endTime = System.nanoTime();
+        runningTime = ((endTime - startTime) / 1000000L);
         return false;
     }
 
@@ -105,6 +109,7 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     public Integer getNodesExpanded() {
         return explored.size();
     }
+    public long getRunningTime() { return runningTime; }
 
     @Override
     public ArrayList<T> getPath(T initialState, T goalState) {

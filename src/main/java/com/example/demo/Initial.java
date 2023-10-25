@@ -21,7 +21,7 @@ public class Initial {
     public int depth ;
     public int costToReach ;
     public int nodesExpanded ;
-    public int runningTime ;
+    public long runningTime ;
 
     public Initial(MainApp mainApp) {
         VBox layout = new VBox(30);
@@ -48,8 +48,8 @@ public class Initial {
                 depth = dfs.getDepth();
                 costToReach = dfs.getCostOfPath();
                 nodesExpanded = dfs.getNodesExpanded();
-//                runningTime = dfs.getRunningTime();
-                mainApp.changeScene(new MatrixPreview(mainApp, dfs.getPath(initState, goalState), nodesExpanded, depth, costToReach).getScene());
+                runningTime = dfs.getRunningTime();
+                mainApp.changeScene(new MatrixPreview(mainApp, dfs.getPath(initState, goalState), nodesExpanded, depth, costToReach, runningTime).getScene());
 
             }
             else showAlert();
@@ -63,10 +63,8 @@ public class Initial {
                 depth = bfs.getDepth();
                 costToReach = bfs.getCostOfPath();
                 nodesExpanded = bfs.getNodesExpanded();
-//                runningTime = bfs.getRunningTime();
-                mainApp.changeScene(new MatrixPreview(mainApp, bfs.getPath(initState, goalState), nodesExpanded, depth, costToReach).getScene());
-
-
+                runningTime = bfs.getRunningTime();
+                mainApp.changeScene(new MatrixPreview(mainApp, bfs.getPath(initState, goalState), nodesExpanded, depth, costToReach, runningTime).getScene());
             }
 
                 else showAlert();
@@ -79,8 +77,8 @@ public class Initial {
                 depth = A_M.getDepth();
                 costToReach = A_M.getCostOfPath();
                 nodesExpanded = A_M.getNodesExpanded();
-//                runningTime = A_M.getRunningTime();
-                mainApp.changeScene(new MatrixPreview(mainApp, A_M.getPath(initState, goalState), nodesExpanded, depth, costToReach).getScene());
+                runningTime = A_M.getRunningTime();
+                mainApp.changeScene(new MatrixPreview(mainApp, A_M.getPath(initState, goalState), nodesExpanded, depth, costToReach, runningTime).getScene());
             }
             else showAlert();
         });
@@ -93,8 +91,8 @@ public class Initial {
                 depth = A_E.getDepth();
                 costToReach = A_E.getCostOfPath();
                 nodesExpanded = A_E.getNodesExpanded();
-//                runningTime = A_E.getRunningTime();
-                mainApp.changeScene(new MatrixPreview(mainApp, A_E.getPath(initState, goalState), nodesExpanded, depth, costToReach).getScene());
+                runningTime = A_E.getRunningTime();
+                mainApp.changeScene(new MatrixPreview(mainApp, A_E.getPath(initState, goalState), nodesExpanded, depth, costToReach, runningTime).getScene());
             }
             else showAlert();
         });

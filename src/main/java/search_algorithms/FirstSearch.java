@@ -29,6 +29,9 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
     @Override
     public boolean search(T initialState, T goalState) {
 
+        //running time
+        startTime = System.nanoTime();
+
         //push the initial state in the frontier and to frontier U explored hashset
         frontier.push(initialState);
         childParent.put(initialState, initialState);
@@ -48,6 +51,8 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
             {
                 reachedGoalState = true;
                 toGoalPathCost = depth.get(currentState);
+                endTime = System.nanoTime();
+                runningTime = ((endTime - startTime) / 1000000L);
                 return reachedGoalState;
             }
 
@@ -65,6 +70,8 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
             }
         }
 
+        endTime = System.nanoTime();
+        runningTime = ((endTime - startTime) / 1000000L);
         //didn't find the goal state
         return false;
     }
@@ -80,6 +87,8 @@ public class FirstSearch<T> extends Search<T>{//T is the type of the state
 
     @Override
     public Integer getNodesExpanded() { return explored.size(); }
+
+    public long getRunningTime() { return runningTime; }
 
     @Override
     public ArrayList<T> getPath(T initialState , T goalState ) {
