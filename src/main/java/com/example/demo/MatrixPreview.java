@@ -91,7 +91,7 @@ public class MatrixPreview {
                 }
                 else {
                     textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
-                            "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                            "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50; -fx-border-color: #04364A; -fx-border-width: 4; ");
                 }
                 textField.setOpacity(1);
 
@@ -277,14 +277,12 @@ public class MatrixPreview {
             }
             else {
                 textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
-                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50 ; -fx-border-color: #04364A; -fx-border-width: 4;");
             }
 
             if (goalReached){
-
-
                 textField.setStyle("-fx-background-color: #45A298;-fx-border-width: 0;" +
-                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50; -fx-border-color: #17594A; -fx-border-width: 4;");
                 //make color opacity higher
                 if((state % 10) == 0) {
                     textField.setText("");
