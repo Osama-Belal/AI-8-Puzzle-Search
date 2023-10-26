@@ -15,6 +15,11 @@ public abstract class Search<T> {
     Neighbors<T> neighbors;
     Integer maxDepth = 0;
     Integer toGoalPathCost = 0;
+
+    long startTime = 0;
+    long endTime = 0;
+    long runningTime = 0;
+
     boolean reachedGoalState = false;
 
 
@@ -23,6 +28,7 @@ public abstract class Search<T> {
     public abstract Integer getDepth();
     public abstract Integer getCostOfPath();
     public abstract Integer getNodesExpanded();
+    public abstract long getRunningTime();
     public abstract ArrayList<T> getPath(T initialState, T goalState);
     public boolean isReachedGoalState() { return reachedGoalState; }
 

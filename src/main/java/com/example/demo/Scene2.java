@@ -17,7 +17,7 @@ public class Scene2 {
 
         layout.getChildren().addAll(backButton);
 
-        scene = new Scene(layout, 700, 550);
+        scene = new Scene(layout, 1024, 768);
     }
 
     public Scene getScene() {
