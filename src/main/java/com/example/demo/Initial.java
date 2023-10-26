@@ -26,7 +26,7 @@ public class Initial {
 
     public Initial(MainApp mainApp) {
         VBox layout = new VBox(30);
-        layout.setStyle("-fx-background-color: #BEF2FF; -fx-padding: 20; -fx-alignment: center;");
+        layout.setStyle("-fx-background-color: #D2E9E9; -fx-padding: 20; -fx-alignment: center;");
 
         GridPane matrixGrid = createMatrixGrid(initialState);
 
@@ -167,7 +167,7 @@ public class Initial {
         alert.getDialogPane().setHeader(text);
         //make title in center
         alert.getDialogPane().setPadding(new Insets(20));
-        alert.getDialogPane().setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.valueOf("#BEF2FF"), CornerRadii.EMPTY, Insets.EMPTY)));
+        alert.getDialogPane().setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.valueOf("#F5F7F8"), CornerRadii.EMPTY, Insets.EMPTY)));
         Text text1 = new Text("Please try again with another puzzle !!");
         text1.setStyle("-fx-font-size: 25px;; -fx-fill: #04364A;");
         alert.getDialogPane().setContent(text1);
