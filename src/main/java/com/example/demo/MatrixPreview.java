@@ -1,6 +1,9 @@
 package com.example.demo;
 
-import javafx.application.Application;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,9 +11,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -38,8 +43,8 @@ public class MatrixPreview {
 
         // Create UI components
         GridPane matrixGrid = createMatrixGrid(this.pathOfStates[0]); // Create a 3x3 matrix grid
-        HBox buttonContainer = createButtonContainer(matrixGrid, mainApp); // Create buttons for manipulation
-        HBox buttonStatsContainer = createButtonStatsContainer();
+        HBox buttonContainer = createTraverseButtonContainer(matrixGrid); // Create buttons for manipulation
+        HBox buttonStatsContainer = createActionButtonContainer(mainApp);
 
         // Apply styles directly to components
         matrixGrid.setStyle("-fx-background-color: #BEF2FF;");
@@ -60,7 +65,6 @@ public class MatrixPreview {
     }
 
     public Scene getScene() { return scene; }
-
     private GridPane createMatrixGrid(long state) {
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
@@ -99,47 +103,78 @@ public class MatrixPreview {
 
         return gridPane;
     }
+    public static Button createIconButton(String svg) {
 
-    //create show statistics button
-    private HBox createButtonStatsContainer() {
-        Button button = new Button("Show Statistics");
-        button.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
-                "-fx-alignment: center;-fx-font-size: 15;");
-        button.setMaxSize(150, 50);
-        button.setMinSize(150, 50);
-        //show alert of statistics through calling show statistics method
-        button.setOnAction(event -> showAlertStatistics());
-        HBox buttonContainer = new HBox(button);
-        buttonContainer.setAlignment(Pos.CENTER);
-        return buttonContainer;
+
+        SVGPath path = new SVGPath();
+        path.setContent(svg);
+        path.setFill(javafx.scene.paint.Color.WHITE);
+        Bounds bounds = path.getBoundsInLocal();
+
+        // scale to size 20x20 (max)
+        double scaleFactor = 20 / Math.max(bounds.getWidth(), bounds.getHeight());
+        path.setScaleX(scaleFactor);
+        path.setScaleY(scaleFactor);
+        path.getStyleClass().add("button-icon");
+
+        Button button = new Button();
+        button.setPickOnBounds(true); // make sure transparent parts of the button register clicks too
+        button.setGraphic(path);
+        button.setAlignment(Pos.CENTER);
+        button.getStyleClass().add("icon-button");
+
+        return button;
     }
-
-    private HBox createButtonContainer(GridPane matrixGrid, MainApp mainApp) {
-        // Create Previous and Next buttons and handle their actions
-        Button prevButton = new Button("Previous");
-        Button nextButton = new Button("Next");
+    private HBox createActionButtonContainer(MainApp mainApp) {
+        Button statsButton = new Button("Show Statistics");
         Button backButton = new Button("Main Menu");
 
-        prevButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
-                "-fx-alignment: center;-fx-font-size: 15;");
-        nextButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
-                "-fx-alignment: center;-fx-font-size: 15;");
         backButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
                 "-fx-alignment: center;-fx-font-size: 15;");
+        statsButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
+                "-fx-alignment: center;-fx-font-size: 15;");
 
-        prevButton.setMaxSize(150, 50);
-        prevButton.setMinSize(150, 50);
-        nextButton.setMinSize(150, 50);
-        nextButton.setMaxSize(150, 50);
         backButton.setMinSize(150, 50);
         backButton.setMaxSize(150, 50);
+        statsButton.setMaxSize(150, 50);
+        statsButton.setMinSize(150, 50);
+
+        //show alert of statistics through calling show statistics method
+        backButton.setOnAction(event -> mainApp.changeScene(new Initial(mainApp).getScene()));
+        statsButton.setOnAction(event -> showAlertStatistics());
+
+        HBox buttonContainer = new HBox(statsButton, backButton);
+        buttonContainer.setAlignment(Pos.CENTER);
+        buttonContainer.setSpacing(5);
+        return buttonContainer;
+    }
+    private HBox createTraverseButtonContainer(GridPane matrixGrid) {
+        SVGPath playIcon = new SVGPath();
+        playIcon.setContent("M0 0 L0 10 L10 5 Z");
+        playIcon.setFill(Color.WHITE);
+
+        SVGPath pauseIcon = new SVGPath();
+        pauseIcon.setContent("M0 0 H3 V10 H0 M6 0 H9 V10 H6");
+        pauseIcon.setFill(Color.WHITE);
+
+        // Create Previous and Next buttons and handle their actions
+        Button prevButton = createIconButton("M10 0 L0 5 L10 10 L5 5 Z");
+        Button playButton = createIconButton("M0 0 L0 10 L7 5 Z");
+        Button nextButton = createIconButton("M0 0 L10 5 L0 10 L5 5 Z");
+
+        prevButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;-fx-alignment: center;-fx-font-size: 15;");
+        playButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;-fx-alignment: center;-fx-font-size: 15;");
+        nextButton.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;-fx-alignment: center;-fx-font-size: 15;");
+
+        prevButton.setMaxSize(100, 50);
+        prevButton.setMinSize(100, 50);
+        playButton.setMaxSize(100, 50);
+        playButton.setMinSize(100, 50);
+        nextButton.setMinSize(100, 50);
+        nextButton.setMaxSize(100, 50);
 
         prevButton.setDisable(currentStateIndex == 0);
         nextButton.setDisable(currentStateIndex == pathOfStates.length - 1);
-
-        backButton.setOnAction(event -> {
-            mainApp.changeScene(new Initial(mainApp).getScene());
-        });
 
         prevButton.setOnAction(event -> {
             // Handle Previous button action
@@ -149,6 +184,38 @@ public class MatrixPreview {
             }
             prevButton.setDisable(currentStateIndex == 0);
             nextButton.setDisable(currentStateIndex == pathOfStates.length - 1);
+        });
+
+        Timeline timeline = new Timeline();
+        int delay = 250;
+        playButton.setOnAction(event -> {
+            if (timeline.getStatus() == Timeline.Status.RUNNING) {
+                timeline.pause();
+                playButton.setGraphic(playIcon);
+            }
+            else {
+                playButton.setGraphic(pauseIcon);
+                if (currentStateIndex == pathOfStates.length - 1) {
+                    currentStateIndex = 0;
+                    updateMatrix(matrixGrid, pathOfStates[currentStateIndex]);
+                }
+                if (timeline.getStatus() == Timeline.Status.PAUSED)
+                    timeline.play();
+                else {
+                    timeline.getKeyFrames().clear();
+                    timeline.getKeyFrames().add(new KeyFrame(Duration.millis(delay), e -> {
+                        if (currentStateIndex < pathOfStates.length - 1) {
+                            currentStateIndex++;
+                            updateMatrix(matrixGrid, pathOfStates[currentStateIndex]);
+                        } else {
+                            timeline.stop();
+                            playButton.setGraphic(playIcon);
+                        }
+                    }));
+                    timeline.setCycleCount(Timeline.INDEFINITE);
+                    timeline.play();
+                }
+            }
         });
 
         nextButton.setOnAction(event -> {
@@ -162,7 +229,7 @@ public class MatrixPreview {
         });
 
         // Create button container (HBox) and center the buttons
-        HBox buttonContainer = new HBox(prevButton, nextButton, backButton);
+        HBox buttonContainer = new HBox(prevButton, playButton, nextButton);
         buttonContainer.setAlignment(Pos.CENTER);
         buttonContainer.setSpacing(5);
         return buttonContainer;
@@ -192,8 +259,6 @@ public class MatrixPreview {
         alert.setResizable(true);
         alert.showAndWait();
     }
-
-
     private void updateMatrix(GridPane matrix, long state) {
         boolean goalReached = state == 12345678L;
         for (int row = 0, col = 0;row*3 + col < 9;col++) {

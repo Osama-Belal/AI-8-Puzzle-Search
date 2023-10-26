@@ -18,6 +18,7 @@ import search_algorithms.Search;
 public class Initial {
     private Scene scene;
     private long goalState = 12345678L;
+    private long initialState = 854672301L;
     public int depth ;
     public int costToReach ;
     public int nodesExpanded ;
@@ -27,7 +28,7 @@ public class Initial {
         VBox layout = new VBox(30);
         layout.setStyle("-fx-background-color: #BEF2FF; -fx-padding: 20; -fx-alignment: center;");
 
-        GridPane matrixGrid = createMatrixGrid(12345678L);
+        GridPane matrixGrid = createMatrixGrid(initialState);
 
         Text title = new Text("Enter Your Puzzle");
         title.setStyle("-fx-font-size: 50; -fx-fill: #04364A; -fx-font-weight: bold;");
@@ -50,7 +51,8 @@ public class Initial {
                 costToReach = dfs.getCostOfPath();
                 nodesExpanded = dfs.getNodesExpanded();
                 runningTime = dfs.getRunningTime();
-                mainApp.changeScene(new MatrixPreview(mainApp, dfs.getPath(initState, goalState), nodesExpanded, depth, costToReach, runningTime).getScene());
+                mainApp.changeScene(new MatrixPreview(mainApp, dfs.getPath(initState, goalState),
+                        nodesExpanded, depth, costToReach, runningTime).getScene());
 
             }
             else showAlert();
@@ -65,7 +67,8 @@ public class Initial {
                 costToReach = bfs.getCostOfPath();
                 nodesExpanded = bfs.getNodesExpanded();
                 runningTime = bfs.getRunningTime();
-                mainApp.changeScene(new MatrixPreview(mainApp, bfs.getPath(initState, goalState), nodesExpanded, depth, costToReach, runningTime).getScene());
+                mainApp.changeScene(new MatrixPreview(mainApp, bfs.getPath(initState, goalState),
+                        nodesExpanded, depth, costToReach, runningTime).getScene());
             }
 
                 else showAlert();
@@ -135,7 +138,6 @@ public class Initial {
         gridPane.setHgap(5);
         gridPane.setVgap(5);
 
-        // Populate the grid with TextField inputs (you can replace this with your actual input logic)
         for (int row = 2; row >= 0; row--) {
             for (int col = 2; col >= 0; col--) {
                 TextField textField = new TextField();
