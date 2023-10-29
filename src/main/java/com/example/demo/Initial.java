@@ -3,10 +3,8 @@ package com.example.demo;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -101,7 +99,12 @@ public class Initial {
             else showAlert();
         });
 
-        layout.getChildren().addAll(titleContainer, matrixGrid, traverseButtons);
+        HBox radioButtons = createRadioButtons(new String[]{"Top Left", "Bottom Right"});
+        // change goalstate when this button is selected
+        ((RadioButton) radioButtons.getChildren().get(0)).setOnAction(e -> goalState = 12345678L);
+        ((RadioButton) radioButtons.getChildren().get(1)).setOnAction(e -> goalState = 123456780L);
+
+        layout.getChildren().addAll(titleContainer, matrixGrid, traverseButtons, radioButtons);
         scene = new Scene(layout, 1024, 768);
     }
 
@@ -157,7 +160,6 @@ public class Initial {
         return gridPane;
     }
 
-
     private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -175,5 +177,28 @@ public class Initial {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.setResizable(true);
         alert.showAndWait();
+    }
+
+    public static HBox createRadioButtons(String[] options) {
+        HBox container = new HBox();
+        container.setAlignment(Pos.CENTER_LEFT);
+
+        // Create a ToggleGroup to ensure only one radio button is selected at a time
+        ToggleGroup toggleGroup = new ToggleGroup();
+
+        // Create radio buttons for each option in the array
+        for (String option : options) {
+            RadioButton radioButton = new RadioButton(option);
+            radioButton.setToggleGroup(toggleGroup); // Add radio button to the toggle group
+            container.getChildren().add(radioButton); // Add radio button to the container
+
+            // Set default radio button to be the first option
+            if (option.equals(options[0]))
+                radioButton.setSelected(true);
+        }
+        container.setStyle("-fx-font-size: 15; -fx-text-fill: #04364A;");
+        container.setAlignment(Pos.CENTER);
+
+        return container;
     }
 }
