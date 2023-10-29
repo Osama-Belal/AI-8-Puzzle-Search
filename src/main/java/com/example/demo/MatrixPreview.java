@@ -27,6 +27,7 @@ public class MatrixPreview {
     private int depth;
     private int costToReach;
     private long runningTime;
+    private long goalState;
 
 
     public MatrixPreview(MainApp mainApp, ArrayList<Long> path, int nodesExpanded, int depth, int costToReach, long runningTime) {
@@ -40,6 +41,7 @@ public class MatrixPreview {
         this.depth = depth;
         this.costToReach = costToReach;
         this.runningTime = runningTime;
+        this.goalState = this.pathOfStates[this.pathOfStates.length - 1];
 
         // Create UI components
         GridPane matrixGrid = createMatrixGrid(this.pathOfStates[0]); // Create a 3x3 matrix grid
@@ -66,6 +68,7 @@ public class MatrixPreview {
 
     public Scene getScene() { return scene; }
     private GridPane createMatrixGrid(long state) {
+        boolean goalReached = state == goalState;
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
@@ -93,6 +96,17 @@ public class MatrixPreview {
                     textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
                             "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
                 }
+                if (goalReached){
+
+                    textField.setStyle("-fx-background-color: #45A298;-fx-border-width: 0;" +
+                            "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                    //make color opacity higher
+                    if((state % 10) == 0) {
+                        textField.setText("");
+                        textField.setStyle("-fx-background-color: #BEF2FF;-fx-border-width: 0;" +
+                                "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                    }
+                }
                 textField.setOpacity(1);
 
                 // Set initial values (you can replace this with your logic)
@@ -104,8 +118,6 @@ public class MatrixPreview {
         return gridPane;
     }
     public static Button createIconButton(String svg) {
-
-
         SVGPath path = new SVGPath();
         path.setContent(svg);
         path.setFill(javafx.scene.paint.Color.WHITE);
@@ -260,7 +272,7 @@ public class MatrixPreview {
         alert.showAndWait();
     }
     private void updateMatrix(GridPane matrix, long state) {
-        boolean goalReached = state == 12345678L;
+        boolean goalReached = state == goalState;
         for (int row = 0, col = 0;row*3 + col < 9;col++) {
             // Move to the next row if the current column exceeds 2
             row += col / 3;
@@ -296,7 +308,4 @@ public class MatrixPreview {
             state /= 10;
         }
     }
-
-    //show statistics method
-
 }
