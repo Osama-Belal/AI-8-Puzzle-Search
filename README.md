@@ -22,7 +22,7 @@ You will need to implement the 8-puzzle search problem using three search algori
 
 For the A* algorithm, we will use two heuristics, Manhattan and Euclidean, and compare their performance in terms of the number of nodes expanded and output paths to determine which heuristic is more admissible.
 
-1. Manhattan Distance:
+1. Manhattan distance:
 It is the sum of absolute differences in x and y coordinates between the current cell and the goal cell.
 Formula: `h = abs(current cell:x - goal:x) + abs(current cell:y - goal:y)`
 
@@ -34,9 +34,9 @@ Formula: `h = sqrt((current cell:x - goal:x)^2 + (current cell:y - goal:y)^2)`
 
 In this project, we use the following data structures:
 
-**Queue:** Used in BFS for node exploration.
-**Stack:** Used in DFS for node exploration.
-**Priority Queue:** Used in A* for node exploration with priority based on heuristics.
+1.**Queue:**: Used in BFS for node exploration.
+2.**Stack:**: Used in DFS for node exploration.
+3.**Priority Queue:**: Used in A* for node exploration with priority based on heuristics.
 
 ## Usage
 
