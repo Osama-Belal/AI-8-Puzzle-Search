@@ -7,7 +7,7 @@ import java.util.*;
 
 public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     boolean isManhattan;
-    HashMap<T, Pair<Double, T>> childParent ;
+    HashMap<T, Pair<Double, T>> childParent;
 
     public HeuristicSearch(char type) {
         // type is either M for Manhattan distance
@@ -57,7 +57,6 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     // now we will implement A* search algorithm
     @Override
     public boolean search(T initialState, T goalState) {
-        System.out.println("Start Searching");
         startTime = System.nanoTime();
         PriorityQueue<Pair<Double, T>> frontier = new PriorityQueue<>((a, b) -> Long.compare(a.getKey().compareTo(b.getKey()), 0));
         double Fn = this.isManhattan ? manhattanDistance(initialState) : EuclideanDistance(initialState);
@@ -81,13 +80,23 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
 
             for (T neighbor : neighbors.getNeighbors(currentState)) {
                 if (!visited.contains(neighbor)) {
-                    double currDepth = childParent.get(currentState).getLeft() + 1;
+                    double currDepth = depth.get(currentState) + 1;
                     double fn = (this.isManhattan ? manhattanDistance(neighbor) : EuclideanDistance(neighbor)) + currDepth;
-
                     frontier.add(Pair.of(fn, neighbor));
                     childParent.put(neighbor, Pair.of(currDepth, currentState));
                     visited.add(neighbor);
                     depth.put(neighbor, depth.get(currentState) + 1);
+                }
+                // if the neighbor is already visited
+                // then check if the current path is better than the previous one
+                else if (visited.contains(neighbor) && !explored.contains(neighbor)) {
+                    double currDepth = depth.get(currentState) + 1;
+                    if (currDepth < depth.get(neighbor)) {
+                        double fn = (this.isManhattan ? manhattanDistance(neighbor) : EuclideanDistance(neighbor)) + currDepth;
+                        frontier.add(Pair.of(fn, neighbor));
+                        childParent.put(neighbor, Pair.of(currDepth, currentState));
+                        depth.put(neighbor, depth.get(currentState) + 1);
+                    }
                 }
             }
         }
@@ -97,27 +106,35 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
     }
 
     @Override
-    public T getParent(T state) { return childParent.get(state).getRight(); }
+    public T getParent(T state) {
+        return childParent.get(state).getRight();
+    }
 
     @Override
-    public Integer getDepth() { return this.maxDepth; }
+    public Integer getDepth() {
+        return this.maxDepth;
+    }
 
     @Override
-    public Integer getCostOfPath() { return this.toGoalPathCost; }
+    public Integer getCostOfPath() {
+        return this.toGoalPathCost;
+    }
 
     @Override
     public Integer getNodesExpanded() {
         return explored.size();
     }
-    public long getRunningTime() { return runningTime; }
+
+    public long getRunningTime() {
+        return runningTime;
+    }
 
     @Override
     public ArrayList<T> getPath(T initialState, T goalState) {
         ArrayList<T> path = new ArrayList<>();
         T state = (reachedGoalState) ? goalState : null;
 
-        while (!(state == null || state.equals(initialState)))
-        {
+        while (!(state == null || state.equals(initialState))) {
             path.add(state);
             state = childParent.get(state).getRight();
         }
