@@ -112,7 +112,10 @@ public class HeuristicSearch<T extends Comparable<T>> extends Search<T> {
 
     @Override
     public Integer getDepth() {
-        return this.maxDepth;
+        for (Integer depthValue : depth.values()) {
+            this.maxDepth = Math.max(this.maxDepth, depthValue);
+        }
+        return maxDepth;
     }
 
     @Override
