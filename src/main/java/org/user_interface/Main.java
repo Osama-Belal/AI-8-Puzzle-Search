@@ -55,21 +55,23 @@ public class Main {
                         initialState = scanner.nextInt();
                         System.out.println("Enter goal state:");
                         goalState = scanner.nextInt();
-                        System.out.println("Enter heuristic type (M or m for Manhattan distance or E or e for Euclidean distance):");
-                        heuristicType = scanner.next().toUpperCase().charAt(0);
-                        while (heuristicType!='M'&&heuristicType!='E') {
-                            System.out.println("Wrong input!");
-                            System.out.println("Enter heuristic type (M or m for Manhattan distance or E or e for Euclidean distance):");
-                            heuristicType = scanner.next().toUpperCase().charAt(0);
-                        }
+                        System.out.println("Enter heuristic type(m for Manhattan, e for Euclidean):");
+                        heuristicType = scanner.next().charAt(0);
+
                     }
-                    Search<Integer> aStar = new HeuristicSearch<>(heuristicType);
-                    System.out.println("the result is: " + aStar.search(initialState, goalState));
-                    System.out.println("Path from initial state to goal state:");
-                    System.out.println(aStar.getPath(initialState, goalState));
-                    System.out.println("Nodes expanded: " + aStar.getNodesExpanded());
-                    System.out.println("Cost of path: " + aStar.getCostOfPath());
-                    System.out.println("Depth: " + aStar.getDepth());
+
+                    HeuristicSearch<Integer> A_M = new HeuristicSearch<>('M');
+                    boolean success=A_M.search(initialState, goalState);
+                    if(success){
+                        System.out.println("Depth: "+A_M.getDepth());
+                        System.out.println("Cost: "+A_M.getCostOfPath());
+                        System.out.println("Nodes Expanded: "+A_M.getNodesExpanded());
+                        System.out.println("Running Time: "+A_M.getRunningTime());
+                    }
+                    else{
+                        System.out.println("No Solution");
+                    }
+
                 }
                 case 4 -> System.out.println("Bye :)");
                 default -> System.out.println("Wrong input!");
