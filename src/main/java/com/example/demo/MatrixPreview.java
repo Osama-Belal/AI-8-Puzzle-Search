@@ -32,7 +32,7 @@ public class MatrixPreview {
 
     public MatrixPreview(MainApp mainApp, ArrayList<Long> path, int nodesExpanded, int depth, int costToReach, long runningTime) {
         VBox layout = new VBox(30);
-        layout.setStyle("-fx-background-color: #BEF2FF; -fx-padding: 20; -fx-alignment: center;");
+        layout.setStyle("-fx-background-color: #D2E9E9; -fx-padding: 20; -fx-alignment: center;");
 
         // Convert the ArrayList to an array of longs
         this.pathOfStates = path.stream().mapToLong(Long::longValue).toArray();
@@ -49,7 +49,7 @@ public class MatrixPreview {
         HBox buttonStatsContainer = createActionButtonContainer(mainApp);
 
         // Apply styles directly to components
-        matrixGrid.setStyle("-fx-background-color: #BEF2FF;");
+        matrixGrid.setStyle("-fx-background-color: #D2E9E9;");
         buttonContainer.setStyle("-fx-text-fill: #FFF; -fx-alignment: center;-fx-font-size: 15;");
         buttonStatsContainer.setStyle("-fx-text-fill: #FFF; -fx-alignment: center;-fx-font-size: 15;");
 
@@ -89,12 +89,12 @@ public class MatrixPreview {
 
                 if((state % 10) == 0) {
                     textField.setText("");
-                    textField.setStyle("-fx-background-color: #BEF2FF;-fx-border-width: 0;" +
+                    textField.setStyle("-fx-background-color: #D2E9E9;-fx-border-width: 0;" +
                             "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
                 }
                 else {
                     textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
-                            "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                            "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50; -fx-border-color: #04364A; -fx-border-width: 4; ");
                 }
                 if (goalReached){
 
@@ -256,7 +256,7 @@ public class MatrixPreview {
         alert.getDialogPane().setHeader(text);
         //make title in center
         alert.getDialogPane().setPadding(new Insets(20));
-        alert.getDialogPane().setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.valueOf("#BEF2FF"), CornerRadii.EMPTY, Insets.EMPTY)));
+        alert.getDialogPane().setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.valueOf("#F5F7F8"), CornerRadii.EMPTY, Insets.EMPTY)));
 
         Text text1 = new Text("1. Number of nodes Expanded: " + nodesExpanded + "\n" +
                 "2. Max Depth of the solution: " + depth + "\n" +
@@ -284,23 +284,21 @@ public class MatrixPreview {
 
             if((state % 10) == 0) {
                 textField.setText("");
-                textField.setStyle("-fx-background-color: #BEF2FF;-fx-border-width: 0;" +
+                textField.setStyle("-fx-background-color: #D2E9E9;-fx-border-width: 0;" +
                         "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
             }
             else {
                 textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
-                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50 ; -fx-border-color: #04364A; -fx-border-width: 4;");
             }
 
             if (goalReached){
-
-
                 textField.setStyle("-fx-background-color: #45A298;-fx-border-width: 0;" +
-                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50; -fx-border-color: #17594A; -fx-border-width: 4;");
                 //make color opacity higher
                 if((state % 10) == 0) {
                     textField.setText("");
-                    textField.setStyle("-fx-background-color: #BEF2FF;-fx-border-width: 0;" +
+                    textField.setStyle("-fx-background-color: #D2E9E9;-fx-border-width: 0;" +
                             "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
                 }
             }

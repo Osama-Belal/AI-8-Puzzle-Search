@@ -24,7 +24,7 @@ public class Initial {
 
     public Initial(MainApp mainApp) {
         VBox layout = new VBox(30);
-        layout.setStyle("-fx-background-color: #BEF2FF; -fx-padding: 20; -fx-alignment: center;");
+        layout.setStyle("-fx-background-color: #D2E9E9; -fx-padding: 20; -fx-alignment: center;");
 
         GridPane matrixGrid = createMatrixGrid(initialState);
 
@@ -113,7 +113,7 @@ public class Initial {
     private Button createButton(String text){
         Button button = new Button(text);
         button.setStyle("-fx-background-color: #04364A;-fx-text-fill: #FFF;" +
-                "-fx-alignment: center;-fx-font-size: 15;");
+                "-fx-alignment: center;-fx-font-size: 15; ");
         button.setMinSize(150, 50);
         button.setMaxSize(150, 50);
         return button;
@@ -145,7 +145,7 @@ public class Initial {
             for (int col = 2; col >= 0; col--) {
                 TextField textField = new TextField();
                 textField.setStyle("-fx-background-color: #176B87;-fx-border-width: 0;" +
-                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50");
+                        "-fx-border-radius: 0; -fx-text-fill: #FFF;-fx-alignment: CENTER; -fx-font-size:50; -fx-border-color: #04364A; -fx-border-width: 4; ");
                 textField.setMinSize(150,150);
                 textField.setMaxSize(200, 200);
                 // get the right most digit
@@ -169,7 +169,7 @@ public class Initial {
         alert.getDialogPane().setHeader(text);
         //make title in center
         alert.getDialogPane().setPadding(new Insets(20));
-        alert.getDialogPane().setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.valueOf("#BEF2FF"), CornerRadii.EMPTY, Insets.EMPTY)));
+        alert.getDialogPane().setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.valueOf("#F5F7F8"), CornerRadii.EMPTY, Insets.EMPTY)));
         Text text1 = new Text("Please try again with another puzzle !!");
         text1.setStyle("-fx-font-size: 25px;; -fx-fill: #04364A;");
         alert.getDialogPane().setContent(text1);
